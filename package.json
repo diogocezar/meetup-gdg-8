@@ -1,0 +1,8 @@
+{
+  "name": "meetup-gdg-8",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:diogocezar/meetup-gdg-8.git",
+  "author": "Diogo Cezar Teixeira Batista <diogo.batista@meifacil.com>",
+  "license": "MIT"
+}
