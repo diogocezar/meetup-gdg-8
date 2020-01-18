@@ -5,15 +5,5 @@ mongoose.connect("mongodb://localhost:27017/node-api", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-
-const Product = require("./src/models/Product");
-
-app.get("/", (req, res) => {
-  Product.create({
-    title: "ReactJS",
-    description: "Just a sample",
-    url: "http://www.google.com"
-  });
-  return res.send("Olá Mundo!");
-});
+app.use("/api", require("./src/routes"));
 app.listen(3000);

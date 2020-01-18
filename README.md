@@ -1,39 +1,33 @@
 # Meetup GDG #8 - Uma API Node em 30 minutos
 
-# Reestruturnado os arquivos
+# Criando a controller que lista os produtos
 
-## Criando um arquivo para as rotas
+Vamos entar criar um arquivo que irá conter toda a regra de negócios:
 
-Vamos mover todas as rodas da aplicação para um arquivo específico para isso.
+```js
+const mongoose = require("mongoose");
+const Product = require("../models/Product");
 
-Criamos então `./src/routes.js` com o conteúdo:
+class ProductController {
+  async index(req, res) {
+    const products = await Product.find();
+    return res.json(products);
+  }
+}
+
+module.exports = new ProductController();
+```
+
+e agora podemos ajustar o arquivo das rotas:
 
 ```js
 const express = require("express");
 const routes = express.Router();
+const ProductController = require("./controllers/ProductController");
 
-routes.get("/", (req, res) => {
-  return res.send("Hello World");
-});
+routes.get("/products", ProductController.index);
 
 module.exports = routes;
 ```
 
-E agora, podemos importar essas rotas no arquivo principal:
-
-```js
-const express = require("express");
-const mongoose = require("mongoose");
-const app = express();
-const routes = require("./src/routes");
-mongoose.connect("mongodb://localhost:27017/node-api", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-app.use("/api", routes);
-app.listen(3000);
-```
-
-Neste momento, nossa aplicação parou de funcionar :(
-
-Nada mais é gravado no banco, mas vamos arrumar isso!
+e já temos nossa api, que lista nossos produtos :)
