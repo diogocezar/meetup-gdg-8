@@ -1,31 +1,27 @@
 # Meetup GDG #8 - Uma API Node em 30 minutos
 
-# Conectando a um banco MongoDB:
+# Configurando o mongoose:
 
-Aqui temos várias opções, recomendo a leitura do material de apoio para maiores detelhes.
-
-Para essa demonstração: Docker + Mongo Local!
-
-Para isso, vamos criar um `docker-compose.yml` com o seguinte conteúdo:
-
-```yml
-version: "3"
-
-services:
-  mongo:
-    image: mongo:latest
-    ports:
-      - 27017:27017
-    volumes:
-      - ./database:/data/db
-```
-
-e agora, podemos testar se nosso banco irá funcionar:
+Agora podemos configurar uma outra dependência para nos ajudar na conexão com o banco de dados:
 
 ```
-docker-compose up -D
+yarn add mongoose
 ```
 
-Em seguida, vamos usar o compass para verificar se conseguimos conectar ao banco ;)
+E então, no nosso arquivo `index.js`:
 
-Notem que os dados ficarão armazenados localmente na pasta 'database', por isso também vamos colocar essa pasta no `.gitignore`
+```js
+const express = require("express");
+const mongoose = require("mongoose");
+const app = express();
+mongoose.connect("mongodb://localhost:27017/node-api", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+app.get("/", (req, res) => {
+  res.send("Olá Mundo!");
+});
+app.listen(3000);
+```
+
+Se tudo der certo, o servidor irá startar sem nenhum erro, e estaremos prontos para seguir para criar nossa primeira model.
