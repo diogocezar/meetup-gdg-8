@@ -1,20 +1,21 @@
 # Meetup GDG #8 - Uma API Node em 30 minutos
 
-# Adicionando o express:
+# Adicionando o nodemon:
 
 ```
-yarn add express
+yarn add -D nodemon
 ```
 
-então, agora em nosso `index.js`:
+E adicionamos em nosso `package.json`:
 
-```js
-const express = require("express");
-const app = express();
-app.get("/", (req, res) => {
-  res.send("Olá Mundo!");
-});
-app.listen(3000);
+```json
+  "scripts": {
+    "dev" : "nodemon index.js"
+  },
 ```
 
-mais simples, certo?
+agora, podemos testar nossa aplicação:
+
+```
+yarn dev
+```
