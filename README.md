@@ -1,52 +1,39 @@
 # Meetup GDG #8 - Uma API Node em 30 minutos
 
-# Criando a primeira model:
+# Reestruturnado os arquivos
 
-Vamos criar em `./src/models/ProductModel.js`
+## Criando um arquivo para as rotas
+
+Vamos mover todas as rodas da aplicação para um arquivo específico para isso.
+
+Criamos então `./src/routes.js` com o conteúdo:
 
 ```js
-const mongoose = require("mongoose");
-const ProductSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  url: {
-    type: String,
-    required: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+const express = require("express");
+const routes = express.Router();
+
+routes.get("/", (req, res) => {
+  return res.send("Hello World");
 });
 
-module.exports = mongoose.model("Product", ProductSchema);
+module.exports = routes;
 ```
 
-e agora em nosso arquivo `index.js`:
+E agora, podemos importar essas rotas no arquivo principal:
 
 ```js
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const routes = require("./src/routes");
 mongoose.connect("mongodb://localhost:27017/node-api", {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
-
-const Product = require("./models/Product");
-
-app.get("/", (req, res) => {
-  Product.create({
-    title: "ReactJS",
-    description: "Just a sample",
-    url: "http://www.google.com"
-  });
-  return res.send("Olá Mundo!");
-});
+app.use("/api", routes);
 app.listen(3000);
 ```
+
+Neste momento, nossa aplicação parou de funcionar :(
+
+Nada mais é gravado no banco, mas vamos arrumar isso!
